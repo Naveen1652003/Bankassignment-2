@@ -1,0 +1,159 @@
+import java.sql.*;
+import java.util.Scanner;
+
+public class selectqueary {
+
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        Scanner sc = new Scanner(System.in);
+//        System.out.println("inset data into table");
+//       int c_id = sc.nextInt();
+//       String c_name=sc.nextLine() ;
+//        int b_id = sc.nextInt();
+//       String b_name=sc.nextLine();
+//        int cont_number = sc.nextInt();
+//        String c_pan=sc.nextLine();
+//        String c_adher=sc.nextLine();
+//        int a_number=sc.nextInt();
+//        int a_balance = sc.nextInt();
+//        int a_pin = sc.nextInt();
+//        String a_type=sc.nextLine();
+//        int    c_age = sc.nextInt();
+//        insertquery(c_id, c_name, b_id, b_name, cont_number, c_pan, c_adher, a_number, a_balance, a_pin, a_type, c_age);
+//        //selectquery();
+//        System.out.println("update name into the table");
+//        System.out.println("enter customer id");
+////        int C_id = sc.nextInt();
+//        System.out.println("enter the new name");
+////        String C_name=sc.nextLine() ;
+//        // updatename(C_id,C_name);
+//        //  selectquery();
+//        System.out.println("delet element in the table");
+////        int C_ID = sc.nextInt();
+//        // deletquery(33);
+//        //  selectquery();
+//        System.out.println("check balance");
+//        System.out.println("enter id");
+//        int id = sc.nextInt();
+//        checkbalance(id);
+        System.out.println("update pin");
+        int ID=sc.nextInt();
+        int new_pin=sc.nextInt();
+        updatpin(ID,new_pin);
+        selectquery();
+
+    }
+
+
+    public static void selectquery() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "root");
+        Statement s = con.createStatement();
+        ResultSet rs = s.executeQuery("Select * from customer");
+        while (rs.next()) {
+            System.out.println(rs.getInt("c_id") + " " + rs.getString("c_name") + " " + rs.getInt("b_id") + " " + rs.getString("b_name") + " " + rs.getInt("cont_number") + " " + rs.getString("c_pan") + " " + rs.getString("c_adher") + " " + rs.getInt("a_number") + " " + rs.getInt("a_balance") + " " + rs.getInt("a_pin") + " " + rs.getString("a_type") + " " + rs.getInt("c_age") + " ");
+        }
+    }
+
+    public static void insertquery(int c_id, String c_name, int b_id, String b_name, int cont_number, String c_pan, String c_adher, int a_number, int a_balance, int a_pin, String a_type, int c_age) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "root");
+        PreparedStatement ps = con.prepareStatement("insert into bank.customer values(?,?,?,?,?,?,?,?,?,?,?,?)");
+
+        ps.setInt(1, c_id);
+        ps.setString(2, c_name);
+        ps.setInt(3, b_id);
+        ps.setString(4, b_name);
+        ps.setInt(5, cont_number);
+        ps.setString(6, c_pan);
+        ps.setString(7, c_adher);
+        ps.setInt(8, a_number);
+        ps.setInt(9, a_balance);
+        ps.setInt(10, a_pin);
+        ps.setString(11, a_type);
+        ps.setInt(12, c_age);
+        int row = ps.executeUpdate();
+        if (row > 0) {
+            System.out.println("inserted sucessfuly");
+        } else {
+            System.out.println("not inserted");
+        }
+
+
+    }
+
+    public static void updatename(int c_id, String c_name) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "root");
+        PreparedStatement ps = con.prepareStatement("update bank.customer set c_name=? where c_id=?");
+        ps.setString(1, c_name);
+        ps.setInt(2, c_id);
+
+
+        int row = ps.executeUpdate();
+        if (row > 0) {
+            System.out.println("updated sucessfuly");
+        } else {
+            System.out.println("not updated");
+        }
+
+    }
+
+    public static void deletquery(int c_id) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "root");
+        PreparedStatement ps = con.prepareStatement("delete from bank.customer where c_id=?");
+
+        ps.setInt(1, c_id);
+
+
+        int row = ps.executeUpdate();
+        if (row > 0) {
+            System.out.println("deleted sucessfuly");
+        } else {
+            System.out.println("not delete");
+        }
+
+    }
+
+    public static void checkbalance(int c_id) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "root");
+        Statement s = con.createStatement();
+        ResultSet rs = s.executeQuery("Select * from customer where ");
+        while (rs.next()) {
+            System.out.println(rs.getInt("c_id") + " " +rs.getInt("a_balance"));
+        }
+    }
+    public static void updatpin(int c_id, int a_pin) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "root");
+        PreparedStatement ps = con.prepareStatement("update bank.customer set a_pin=? where c_id=?");
+        ps.setInt(1, a_pin);
+        ps.setInt(2, c_id);
+
+
+        int row = ps.executeUpdate();
+        if (row > 0) {
+            System.out.println("updated sucessfuly");
+        } else {
+            System.out.println("not updated");
+        }
+
+    }
+    public static void updatcont_number(int c_id, int cont_number ) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "root");
+        PreparedStatement ps = con.prepareStatement("update bank.customer set cont_number =? where c_id=?");
+        ps.setInt(1,cont_number  );
+        ps.setInt(2, c_id);
+
+
+        int row = ps.executeUpdate();
+        if (row > 0) {
+            System.out.println("updated sucessfuly");
+        } else {
+            System.out.println("not updated");
+        }
+
+    }
+}
